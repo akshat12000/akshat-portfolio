@@ -22,16 +22,20 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Intersection Observer for section animations
-const animatedSections = document.querySelectorAll('.animate-on-scroll');
-const observer = new window.IntersectionObserver((entries) => {
+// Subtle fade-in on scroll for sections
+const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            entry.target.style.opacity = 1;
+            entry.target.style.transform = 'none';
         }
     });
-}, { threshold: 0.15 });
-animatedSections.forEach(section => observer.observe(section));
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.card-section, .hero-section').forEach(section => {
+    observer.observe(section);
+});
+// No playful or bouncy animations
 
 // Highlight nav link on scroll
 const sectionIds = Array.from(document.querySelectorAll('main section')).map(s => s.id);
