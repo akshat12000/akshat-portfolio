@@ -1,10 +1,39 @@
-// Smooth scroll for navigation links
+// Mobile menu toggle
+const mobileToggle = document.querySelector('.nav-mobile-toggle');
 const navLinks = document.querySelectorAll('nav ul li a');
+const navMenu = document.querySelector('.nav-links');
+
+mobileToggle.addEventListener('click', () => {
+    mobileToggle.classList.toggle('active');
+    navMenu.classList.toggle('active');
+    document.body.classList.toggle('menu-open');
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (navMenu.classList.contains('active') && 
+        !e.target.closest('.nav-links') && 
+        !e.target.closest('.nav-mobile-toggle')) {
+        mobileToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+        document.body.classList.remove('menu-open');
+    }
+});
+
+// Smooth scroll for navigation links
 navLinks.forEach(link => {
     link.addEventListener('click', function(e) {
         const targetId = this.getAttribute('href');
         if (targetId.startsWith('#')) {
             e.preventDefault();
+            
+            // Close mobile menu if open
+            if (navMenu.classList.contains('active')) {
+                mobileToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+            
             document.querySelector(targetId).scrollIntoView({
                 behavior: 'smooth'
             });
@@ -12,42 +41,106 @@ navLinks.forEach(link => {
     });
 });
 
-// Add shadow to navbar on scroll
+// Add shadow and shrink navbar on scroll
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
+    const navbar = document.querySelector('.navbar');
+    
     if (window.scrollY > 30) {
-        header.style.boxShadow = '0 2px 8px rgba(0,0,0,0.12)';
+        header.classList.add('scrolled');
+        navbar.style.padding = '0.8rem 2rem';
     } else {
-        header.style.boxShadow = 'none';
+        header.classList.remove('scrolled');
+        navbar.style.padding = '1rem 2rem';
     }
 });
 
-// Subtle fade-in on scroll for sections
+// Add CSS for scrolled header
+document.head.insertAdjacentHTML('beforeend', `
+<style>
+    header.scrolled {
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        background: rgba(255, 255, 255, 0.98);
+    }
+    
+    body.menu-open {
+        overflow: hidden;
+    }
+</style>
+`);
+
+// Enhanced fade-in on scroll for sections
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = 1;
-            entry.target.style.transform = 'none';
+            entry.target.classList.add('in-view');
         }
     });
-}, { threshold: 0.12 });
+}, { threshold: 0.15, rootMargin: '0px 0px -100px 0px' });
+
+// Add CSS for animations
+document.head.insertAdjacentHTML('beforeend', `
+<style>
+    .card-section, .hero-section {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .card-section.in-view, .hero-section.in-view {
+        opacity: 1;
+        transform: none;
+    }
+    
+    .card {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+        transition-delay: calc(var(--card-index, 0) * 0.1s);
+    }
+    
+    .card-section.in-view .card {
+        opacity: 1;
+        transform: none;
+    }
+</style>
+`);
 
 document.querySelectorAll('.card-section, .hero-section').forEach(section => {
     observer.observe(section);
 });
+
+// Add card animation delay based on index
+document.querySelectorAll('.card-section').forEach(section => {
+    section.querySelectorAll('.card').forEach((card, index) => {
+        card.style.setProperty('--card-index', index);
+    });
+});
 // No playful or bouncy animations
 
-// Highlight nav link on scroll
+// Highlight nav link on scroll with smooth transition
 const sectionIds = Array.from(document.querySelectorAll('main section')).map(s => s.id);
+
+// Add CSS for active link transition
+document.head.insertAdjacentHTML('beforeend', `
+<style>
+    .nav-links li a::after {
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+</style>
+`);
+
 window.addEventListener('scroll', () => {
     let current = '';
     const scrollY = window.scrollY + 120;
+    
     sectionIds.forEach(id => {
         const section = document.getElementById(id);
         if (section && section.offsetTop <= scrollY) {
             current = id;
         }
     });
+    
     navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === '#' + current) {
@@ -173,4 +266,4 @@ addTiltEffect('.achievement-card');
         canvas.height = window.innerHeight;
     });
 })();
-// Project card hover reveal: handled by CSS .project-extra 
+// Project card hover reveal: handled by CSS .project-extra
