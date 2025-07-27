@@ -1,3 +1,70 @@
+// Function to open external links
+function openExternalLink(url) {
+    try {
+        window.open(url, '_blank');
+    } catch (e) {
+        // Fallback for browsers that block window.open
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
+
+// Add event listeners to social links after DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Direct fix for hero social icons
+    const heroLinkedIn = document.querySelector('.hero-social a[href*="linkedin"]');
+    const heroGithub = document.querySelector('.hero-social a[href*="github"]');
+    
+    if (heroLinkedIn) {
+        heroLinkedIn.onclick = function(e) {
+            e.preventDefault();
+            window.open('https://www.linkedin.com/in/akshat-bhatnagar-22a11a19b', '_blank');
+            return false;
+        };
+    }
+    
+    if (heroGithub) {
+        heroGithub.onclick = function(e) {
+            e.preventDefault();
+            window.open('https://github.com/akshat12000', '_blank');
+            return false;
+        };
+    }
+    
+    // Also add click handlers to the icon elements themselves
+    const heroLinkedInIcon = document.querySelector('.hero-social a[href*="linkedin"] i');
+    const heroGithubIcon = document.querySelector('.hero-social a[href*="github"] i');
+    
+    if (heroLinkedInIcon) {
+        heroLinkedInIcon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            window.open('https://www.linkedin.com/in/akshat-bhatnagar-22a11a19b', '_blank');
+        });
+    }
+    
+    if (heroGithubIcon) {
+        heroGithubIcon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            window.open('https://github.com/akshat12000', '_blank');
+        });
+    }
+    
+    // Add debug click handler to body to check if events are being captured
+    document.body.addEventListener('click', function(e) {
+        const target = e.target.closest('.hero-social a, .footer-social a');
+        if (target) {
+            console.log('Social link clicked:', target);
+        } else if (e.target.tagName === 'I' && e.target.closest('.hero-social a, .footer-social a')) {
+            console.log('Social icon clicked:', e.target);
+        }
+    });
+})
+
 // Mobile menu toggle
 const mobileToggle = document.querySelector('.nav-mobile-toggle');
 const navLinks = document.querySelectorAll('nav ul li a');

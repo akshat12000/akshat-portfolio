@@ -99,6 +99,36 @@ header {
     color: #2563eb;
     font-weight: 600;
 }
+
+.nav-social {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-left: 1rem;
+}
+
+.nav-social a {
+    color: #475569;
+    background: rgba(226, 232, 240, 0.5);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 2px 10px rgba(30, 41, 59, 0.04);
+}
+
+.nav-social a:hover {
+    background: #2563eb;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+    border-color: #2563eb;
+}
 main {
     max-width: 1100px;
     margin: 0 auto;
@@ -189,8 +219,10 @@ main {
     margin-bottom: 1.8rem;
     display: flex;
     gap: 0.8rem;
+    position: relative;
+    z-index: 10; /* Ensure links are above other elements */
 }
-.hero-social a {
+.hero-social a, .hero-social .social-button {
     color: #475569;
     background: rgba(226, 232, 240, 0.5);
     border-radius: 50%;
@@ -203,8 +235,23 @@ main {
     transition: all 0.3s ease;
     border: 1px solid rgba(226, 232, 240, 0.8);
     box-shadow: 0 2px 10px rgba(30, 41, 59, 0.04);
+    cursor: pointer; /* Ensure cursor shows as pointer */
+    pointer-events: auto; /* Ensure clicks are captured */
+    position: relative; /* Create stacking context */
 }
-.hero-social a:hover {
+
+/* Button reset styles */
+.hero-social .social-button {
+    padding: 0;
+    margin: 0;
+    background-color: rgba(226, 232, 240, 0.5);
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    touch-action: manipulation; /* Improves touch behavior on mobile */
+}
+
+.hero-social a:hover, .hero-social .social-button:hover {
     background: #2563eb;
     color: #fff;
     transform: translateY(-3px);
@@ -391,6 +438,33 @@ main {
 .card-desc li {
     margin-bottom: 0.3rem;
 }
+
+@media (max-width: 600px) {
+    .experience-item {
+        gap: 1rem;
+    }
+    
+    .experience-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .experience-details h3 {
+        font-size: 1.1rem;
+    }
+    
+    .experience-meta {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .experience-details ul {
+        padding-left: 1rem;
+        font-size: 0.95rem;
+    }
+}
 .skills-list {
     gap: 1.2rem;
     display: grid;
@@ -405,10 +479,11 @@ main {
     font-weight: 500;
     color: #1a223f;
     min-width: 120px;
-    padding: 1rem 1.2rem;
+    padding: 0.8rem 1.2rem;
     border-radius: 12px;
     background: linear-gradient(135deg, #fff, #f8fafc);
     box-shadow: 0 4px 12px rgba(30, 41, 59, 0.04);
+    display: flex;
 }
 .skill i {
     font-size: 1.5rem;
@@ -419,6 +494,16 @@ main {
 
 .skill:hover i {
     transform: scale(1.2);
+}
+
+@media (max-width: 600px) {
+    .skills-list {
+        justify-content: center;
+    }
+    .skill {
+        padding: 0.7rem 1rem;
+        font-size: 0.9rem;
+    }
 }
 .contact-list {
     gap: 1.2rem;
@@ -436,7 +521,27 @@ main {
     box-shadow: 0 4px 15px rgba(30, 41, 59, 0.05);
     transition: all 0.3s ease;
 }
-.contact a {
+
+@media (max-width: 600px) {
+    .contact-item {
+        gap: 0.8rem;
+    }
+    
+    .contact-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .contact-details h3 {
+        font-size: 1rem;
+    }
+    
+    .contact-details p {
+        font-size: 0.9rem;
+    }
+}
+.contact a, .contact span {
     color: #1a223f;
     text-decoration: none;
     font-weight: 500;
@@ -490,7 +595,7 @@ footer {
     gap: 1rem;
     padding: 0 2rem;
 }
-.footer-social a {
+.footer-social a, .footer-social .social-button {
     color: #64748b;
     margin-left: 1rem;
     font-size: 1.1rem;
@@ -502,8 +607,18 @@ footer {
     height: 36px;
     border-radius: 50%;
     background: rgba(226, 232, 240, 0.3);
+    cursor: pointer;
 }
-.footer-social a:hover {
+
+.footer-social .social-button {
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    padding: 0;
+}
+
+.footer-social a:hover, .footer-social .social-button:hover {
     color: #2563eb;
     background: rgba(37, 99, 235, 0.1);
     transform: translateY(-2px);
@@ -598,6 +713,9 @@ footer {
         width: 100%;
         text-align: center;
     }
+    .nav-social {
+        display: none;
+    }
     .nav-links li a {
         display: block;
         padding: 1rem;
@@ -610,16 +728,23 @@ footer {
         flex-direction: column;
         gap: 2rem;
         text-align: center;
+        align-items: center;
+    }
+    .hero-text {
+        max-width: 100%;
     }
     .hero-text h1 {
         font-size: 2.5rem;
+        line-height: 1.2;
     }
     .hero-social {
         justify-content: center;
+        margin-top: 1.5rem;
     }
     .hero-lead {
         margin-left: auto;
         margin-right: auto;
+        font-size: 1.1rem;
     }
     .card-section h2::after {
         left: 50%;
@@ -642,26 +767,45 @@ footer {
     .skills-list {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
     }
     .hero-section {
-        padding: 2rem 1.5rem;
-        margin-bottom: 2.5rem;
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+        min-height: auto;
     }
     .card {
         padding: 1.2rem 1rem;
+        width: 100%;
+        box-sizing: border-box;
     }
     .hero-text h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
+        margin-bottom: 0.8rem;
+    }
+    .hero-lead {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+    }
+    .hero-social {
+        margin-bottom: 1.5rem;
+    }
+    .hero-social a, .hero-social .social-button {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
     }
     .hero-cta {
         flex-direction: column;
         width: 100%;
+        gap: 0.8rem;
     }
     .btn.primary, .btn.secondary {
         width: 100%;
         text-align: center;
         margin-left: 0;
-        margin-top: 1rem;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
     }
     .nav-mobile-toggle.active span:nth-child(1) {
         transform: translateY(9px) rotate(45deg);
@@ -671,5 +815,49 @@ footer {
     }
     .nav-mobile-toggle.active span:nth-child(3) {
         transform: translateY(-9px) rotate(-45deg);
+    }
+    .footer-content {
+        padding: 1.5rem 1rem;
+        text-align: center;
+    }
+    .footer-social {
+        margin-top: 0.5rem;
+    }
+    .card-section {
+        margin-bottom: 2.5rem;
+    }
+    .card-section h2 {
+          font-size: 1.6rem;
+          margin-bottom: 1.5rem;
+      }
+}
+
+/* Extra small devices */
+@media (max-width: 400px) {
+    .hero-text h1 {
+        font-size: 1.8rem;
+    }
+    .hero-lead {
+        font-size: 0.9rem;
+    }
+    .hero-social a, .hero-social .social-button {
+        width: 36px;
+        height: 36px;
+    }
+    .btn.primary, .btn.secondary {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    .card-section h2 {
+        font-size: 1.5rem;
+    }
+    .card {
+        padding: 1rem 0.8rem;
+    }
+    .navbar {
+        padding: 1rem;
+    }
+    .nav-logo {
+        font-size: 1.4rem;
     }
 }

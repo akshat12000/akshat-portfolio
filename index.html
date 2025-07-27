@@ -35,9 +35,10 @@
                     <h1>Hi, I'm <span class="accent">Akshat Bhatnagar</span></h1>
                     <p class="hero-lead">Software Engineer @ Microsoft | Building robust, scalable, and delightful digital experiences.</p>
                     <div class="hero-social">
-                        <a href="https://www.linkedin.com/in/akshat-bhatnagar-22a11a19b" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://github.com/akshat12000" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="mailto:akbhatnagar@microsoft.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
+                        <!-- Using button elements instead of a tags for better clickability -->
+                        <button onclick="window.open('https://www.linkedin.com/in/akshat-bhatnagar-22a11a19b', '_blank')" class="social-button" title="LinkedIn"><i class="fab fa-linkedin-in"></i></button>
+                        <button onclick="window.open('https://github.com/akshat12000', '_blank')" class="social-button" title="GitHub"><i class="fab fa-github"></i></button>
+                        <a href="mailto:akbhatnagar@microsoft.com" title="Email"><i class="fas fa-envelope"></i></a>
                     </div>
                     <div class="hero-cta">
                         <a href="#contact" class="btn primary">Contact Me</a>
@@ -132,9 +133,9 @@
         <section id="contact" class="card-section">
             <h2>Contact</h2>
             <div class="card-list contact-list">
-                <div class="card contact"><i class="fas fa-envelope"></i><a href="mailto:akbhatnagar@microsoft.com">akbhatnagar@microsoft.com</a></div>
-                <div class="card contact"><i class="fas fa-phone"></i>+91-730-0216-359</div>
-                <div class="card contact"><i class="fas fa-map-marker-alt"></i>West Bengal, India</div>
+                <div class="card contact"><i class="fas fa-envelope"></i><a href="mailto:akbhatnagar@microsoft.com" title="Email me">akbhatnagar@microsoft.com</a></div>
+                <div class="card contact"><i class="fas fa-phone"></i><a href="tel:+917300216359" title="Call me">+91-730-0216-359</a></div>
+                <div class="card contact"><i class="fas fa-map-marker-alt"></i><span>West Bengal, India</span></div>
             </div>
         </section>
     </main>
@@ -142,8 +143,8 @@
         <div class="footer-content">
             <span>&copy; 2025 Akshat Bhatnagar</span>
             <span class="footer-social">
-                <a href="https://www.linkedin.com/in/akshat-bhatnagar-22a11a19b" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://github.com/akshat12000" target="_blank"><i class="fab fa-github"></i></a>
+                <button onclick="window.open('https://www.linkedin.com/in/akshat-bhatnagar-22a11a19b', '_blank')" class="social-button" title="LinkedIn"><i class="fab fa-linkedin-in"></i></button>
+                <button onclick="window.open('https://github.com/akshat12000', '_blank')" class="social-button" title="GitHub"><i class="fab fa-github"></i></button>
             </span>
         </div>
     </footer>
